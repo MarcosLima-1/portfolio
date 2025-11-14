@@ -10,6 +10,13 @@ import { type ProjectCategory, projectCategories, projectCategoriesInfo } from "
 
 export const Route = createFileRoute("/_portifolio/projects/")({
 	component: RouteComponent,
+	head: () => ({
+		meta: [
+			{
+				title: "Projetos - Markin | Desenvolvedor Full-stack & Web",
+			},
+		],
+	}),
 });
 
 function RouteComponent() {

@@ -19,16 +19,17 @@ export const projects: Project[] = [
 	},
 	{
 		id: "2",
-		title: "krikipromo",
-		description: "programa e site para divulgação em grupos automatizada de oferta de produtos.",
+		title: "mimaeu",
+		description:
+			"Site para compartilhamento de presentes, onde os usuarios podem criar listas de presentes para eventos como aniversários, casamentos, etc.",
 		techs: ["n8n", "Elysia", "Postgres", "TypeScript", "TanStack Libs"],
 		platforms: ["web"],
-		images: ["/projects/krikipromo.webp"],
+		images: ["/projects/mimaeu.png", "/projects/mimaeu1.png"],
 		links: [
 			{
-				name: "Krikipromo",
+				name: "Mimaeu",
 				type: "external",
-				href: "https://krikipromo.com",
+				href: "https://mimaeu.com",
 			},
 		],
 		categories: ["personal"],
@@ -39,7 +40,7 @@ export const projects: Project[] = [
 		description: "Portfólio pessoal e painel de administração para gerenciar e exibir meus projetos dinamicamente.",
 		techs: ["Elysia", "TypeScript", "Postgres", "Docker"],
 		platforms: ["web"],
-		images: ["/projects/portfolio.webp"],
+		images: ["/projects/portfolio.png"],
 		links: [
 			{
 				name: "Site",

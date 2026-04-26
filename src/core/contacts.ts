@@ -1,27 +1,41 @@
-import { GithubIcon, LinkedinIcon, MailIcon, MapPin } from "lucide-react";
+import { MailIcon, MapPin, PhoneIcon } from "lucide-react";
+import { GitHubIcon } from "@/assets/icons/github";
+import { LinkedInIcon } from "@/assets/icons/linkedin";
+import { WhatsAppIcon } from "@/assets/icons/whatsapp";
+import { info } from "@/core/info";
 
 export const contacts = [
 	{
 		icon: MailIcon,
 		label: "Email",
-		value: "markin-work@protonmail.com",
+		value: info.email,
+	},
+	{
+		icon: PhoneIcon,
+		label: "Telefone",
+		value: info.phone,
 	},
 	{
 		icon: MapPin,
 		label: "Localização",
-		value: "Pernambuco - Brasil",
+		value: info.location,
 	},
 ];
 
 export const socialMedias = [
 	{
-		icon: GithubIcon,
+		icon: GitHubIcon,
 		label: "github",
-		href: "https://github.com/MarcosLima-1",
+		href: info.socialMedias.github,
 	},
 	{
-		icon: LinkedinIcon,
+		icon: LinkedInIcon,
 		label: "linkedin",
-		href: "https://www.linkedin.com/in/marcos-lima-56072734b",
+		href: info.socialMedias.linkedin,
+	},
+	{
+		icon: WhatsAppIcon,
+		label: "whatsapp",
+		href: info.socialMedias.whatsApp,
 	},
 ];

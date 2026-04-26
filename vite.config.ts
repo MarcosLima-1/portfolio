@@ -1,49 +1,42 @@
-import { resolve } from "node:path";
+import babel from "@rolldown/plugin-babel";
 import tailwindcss from "@tailwindcss/vite";
-import { tanstackRouter } from "@tanstack/router-plugin/vite";
-import react from "@vitejs/plugin-react";
-import { visualizer } from "rollup-plugin-visualizer";
+import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+import viteReact, { reactCompilerPreset } from "@vitejs/plugin-react";
+import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
-import Inspect from "vite-plugin-inspect";
 
+// TODO: Add sentry plugin back when we have the Sentry project set up
 
-const ReactCompilerConfig = {
-	target: "19",
-};
-
-export default defineConfig({
-	plugins: [
-		tanstackRouter({
-			target: "react",
-			autoCodeSplitting: true,
-			quoteStyle: "double",
+export default defineConfig(() => {
+	const plugins = [
+		tanstackStart({
+			router: { generatedRouteTree: "./types/routeTree.generated.ts", quoteStyle: "double" },
+		}),
+		nitro({
+			output: { dir: "./build/frontend" },
+			preset: "bun",
+			plugins: ["./server/plugins/discord-bot.ts"],
 		}),
 		tailwindcss(),
-		react({
-			babel: {
-				plugins: [["babel-plugin-react-compiler", ReactCompilerConfig]],
+		viteReact(),
+		babel({ presets: [reactCompilerPreset()] }),
+	];
+
+	return {
+		plugins,
+		build: {
+			outDir: "./build/frontend",
+			reportCompressedSize: true,
+			rollupOptions: {
+				external: ["zlib-sync"],
 			},
-		}),
-		Inspect({}),
-		visualizer({
-			open: true,
-			filename: "bundle-analysis.html",
-			sourcemap: true,
-		}),
-	],
-	resolve: {
-		alias: {
-			"@": resolve(__dirname, "./src"),
 		},
-	},
-	build: {
-		sourcemap: true,
-		cssMinify: "lightningcss",
-		minify: "terser",
-	},
-	server: {
-		port: 3000,
-		host: true,
-		open: true,
-	},
+		resolve: {
+			tsconfigPaths: true,
+		},
+		server: {
+			host: true,
+			open: true,
+		},
+	};
 });

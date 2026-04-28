@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowBigRightIcon, MailIcon, MessageCircleIcon, UserIcon } from "lucide-react";
 import { RoundedIcon } from "@/components/misc/rounded-icon";
+import { Landing } from "@/components/ui/landing";
 import { info } from "@/core/info";
-import { TitlePage } from "@/modules/portifolio/components/title-page";
 
 export const Route = createFileRoute("/_portifolio/links/")({
 	component: RouteComponent,
@@ -17,10 +17,10 @@ const quickLinks = [
 	},
 	{
 		icon: MailIcon,
-		value: info.mail,
+		value: info.email,
 		label: "E-mail",
 		description: "Envie uma mensagem",
-		href: `mailto:${info.mail}`,
+		href: `mailto:${info.email}`,
 	},
 	{
 		icon: MessageCircleIcon,
@@ -33,9 +33,9 @@ const quickLinks = [
 
 function RouteComponent() {
 	return (
-		<main className="flex min-h-[500px] items-center justify-center p-4 sm:p-6 lg:p-8">
+		<main className="flex min-h-125 items-center justify-center p-4 sm:p-6 lg:p-8">
 			<div className="w-full max-w-2xl space-y-16">
-				<TitlePage title="Links Rápidos" />
+				<Landing.Title title="Links Rápidos" />
 				<div className="flex flex-col gap-4 sm:gap-5">
 					{quickLinks.map(({ href, icon: Icon, label, description }) => (
 						<a
@@ -56,12 +56,12 @@ function RouteComponent() {
 									</h2>
 									<p className="text-muted-foreground text-sm sm:text-base">{description}</p>
 								</div>
-								<div className="-translate-x-4 flex-shrink-0 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+								<div className="shrink-0 -translate-x-4 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
 									<ArrowBigRightIcon className="text-primary" />
 								</div>
 							</div>
 
-							<div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+							<div className="pointer-events-none absolute inset-0 bg-linear-to-r from-primary/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 						</a>
 					))}
 				</div>

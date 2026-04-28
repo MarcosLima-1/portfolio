@@ -1,7 +1,7 @@
 import { AwardIcon, BriefcaseIcon, Calendar1Icon, GraduationCapIcon, type LucideIcon } from "lucide-react";
 import type { EventType } from "@/modules/portifolio/pages/time-line/types/timeline-event";
 
-interface EventTypeInfo {
+export interface EventTypeInfo {
 	icon: LucideIcon;
 	color: string;
 	label: string;

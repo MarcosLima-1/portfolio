@@ -1,18 +1,7 @@
-import { type Mutation, MutationCache, type Query, QueryCache, QueryClient } from "@tanstack/react-query";
+import { QueryClient } from "@tanstack/react-query";
 import { DEFAULT_GC_TIME, DEFAULT_STALE_TIME, RETRY_DELAY } from "@/core/cache";
-import { globalErrorHandler, globalSuccessHandler } from "@/lib/tanstack-query/handlers";
+import { mutationCache, queryCache } from "@/lib/tanstack-query/cache";
 import { queryRetryHandler } from "./retry";
-
-
-const mutationCache = new MutationCache({
-	onError: (error, _, _1, mutation) => globalErrorHandler(error, mutation as Mutation),
-	onSuccess: (_, _1, _2, mutation) => globalSuccessHandler(mutation as Mutation),
-});
-
-const queryCache = new QueryCache({
-	onError: (error, query) => globalErrorHandler(error, query as Query),
-	onSuccess: (_, query) => globalSuccessHandler(query as Query),
-});
 
 export const queryClient = new QueryClient({
 	defaultOptions: {

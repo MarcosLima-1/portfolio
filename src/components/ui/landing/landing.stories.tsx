@@ -52,7 +52,10 @@ export const Default: Story = {
 	render: (args) => (
 		<Landing.Page {...args}>
 			<Landing.Section>
-				<Landing.Title title="Bem-vindo ao nosso produto" description="A solução completa para suas necessidades" isH1 />
+				<div>
+					<Landing.Title isH1>Bem-vindo ao nosso produto</Landing.Title>
+					<Landing.Description>A solução completa para suas necessidades</Landing.Description>
+				</div>
 				<Landing.Container>
 					<p className="text-center text-muted-foreground">Este é um exemplo básico de landing page usando os componentes Landing.</p>
 				</Landing.Container>
@@ -68,7 +71,10 @@ export const MultipleSections: Story = {
 	render: (args) => (
 		<Landing.Page {...args}>
 			<Landing.Section>
-				<Landing.Title title="Nossa Plataforma" description="Tudo que você precisa em um só lugar" isH1 />
+				<div>
+					<Landing.Title isH1>Nossa Plataforma</Landing.Title>
+					<Landing.Description>Tudo que você precisa em um só lugar</Landing.Description>
+				</div>
 				<Landing.Container>
 					<p className="max-w-2xl text-center text-muted-foreground">
 						Uma solução completa e moderna para gerenciar seus projetos, colaborar com sua equipe e alcançar seus objetivos.
@@ -85,7 +91,10 @@ export const MultipleSections: Story = {
 			</Landing.Section>
 
 			<Landing.Section>
-				<Landing.Title title="Recursos" description="Tudo que você precisa para ter sucesso" />
+				<div>
+					<Landing.Title>Recursos</Landing.Title>
+					<Landing.Description>Recursos avançados para todas as suas necessidades</Landing.Description>
+				</div>
 				<Landing.Container>
 					<div className="grid w-full grid-cols-1 gap-6 md:grid-cols-3">
 						<Card.Root>
@@ -114,7 +123,9 @@ export const MultipleSections: Story = {
 			</Landing.Section>
 
 			<Landing.Section>
-				<Landing.Title title="Por que escolher nossa solução?" />
+				<div>
+					<Landing.Title title="Por que escolher nossa solução?" />
+				</div>
 				<Landing.Container>
 					<div className="max-w-2xl space-y-4">
 						<div className="flex items-start gap-4">
@@ -171,7 +182,10 @@ export const WithHero: Story = {
 			</Landing.Section>
 
 			<Landing.Section>
-				<Landing.Title title="Trusted by thousands" description="Empresas de todos os tamanhos confiam em nós" />
+				<div>
+					<Landing.Title title="Trusted by thousands" />
+					<Landing.Description>Empresas de todos os tamanhos confiam em nós</Landing.Description>
+				</div>
 				<Landing.Container>
 					<div className="grid grid-cols-2 items-center gap-8 opacity-50 md:grid-cols-4">
 						<div className="text-center font-bold text-2xl">COMPANY</div>
@@ -191,7 +205,10 @@ export const WithHero: Story = {
 export const SectionOnly: Story = {
 	render: () => (
 		<Landing.Section>
-			<Landing.Title title="Recursos Principais" description="Tudo que você precisa em um só lugar" />
+			<div>
+				<Landing.Title title="Recursos Principais" />
+				<Landing.Description>Tudo que você precisa em um só lugar</Landing.Description>
+			</div>
 			<Landing.Container>
 				<div className="grid w-full max-w-4xl grid-cols-1 gap-6 md:grid-cols-2">
 					<Card.Root>
@@ -218,7 +235,7 @@ export const SectionOnly: Story = {
 export const TitleOnly: Story = {
 	render: () => (
 		<div className="p-8">
-			<Landing.Title title="Título Principal" description="Descrição opcional que complementa o título" isH1 />
+			<Landing.Title title="Título Principal" isH1 />
 		</div>
 	),
 };
@@ -259,7 +276,8 @@ export const WithCTA: Story = {
 	render: (args) => (
 		<Landing.Page {...args}>
 			<Landing.Section>
-				<Landing.Title title="Pronto para começar?" description="Junte-se a milhares de usuários satisfeitos" />
+				<Landing.Title title="Pronto para começar?" />
+				<Landing.Description>Junte-se a milhares de usuários satisfeitos</Landing.Description>
 				<Landing.Container>
 					<Card.Root className="max-w-2xl border-primary/20 bg-primary/5">
 						<Card.Header className="text-center">

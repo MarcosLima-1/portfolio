@@ -1,8 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { cn } from "tailwind-variants";
 import { Landing } from "@/components/ui/landing";
-import { dayjs } from "@/lib/dayjs";
-import { eventTypes } from "@/modules/portifolio/pages/time-line/constants/event-type-info";
+import { EventCard } from "@/modules/portifolio/pages/time-line/components/event-card";
+import { EventIcon } from "@/modules/portifolio/pages/time-line/components/event-icon";
 import { sortedEventsByDate } from "@/modules/portifolio/pages/time-line/constants/timeline";
 
 export const Route = createFileRoute("/_portifolio/time-line/")({
@@ -43,44 +42,11 @@ function RouteComponent() {
 				<div className="absolute top-0 bottom-0 left-8 w-0.5 bg-border max-lg:left-1/2 max-lg:-translate-x-1/2" />
 
 				<div className="space-y-8">
-					{sortedEventsByDate.map(({ date, description, title, type, id }) => {
-						const eventDate = dayjs(date);
-						const isRecent = dayjs().diff(eventDate, "months") < 6;
-						const eventInfo = eventTypes[type] || eventTypes.default;
-
+					{sortedEventsByDate.map((event) => {
 						return (
-							<div key={id} className="relative flex items-center gap-6 max-lg:flex-col-reverse">
-								<div
-									className={cn("relative z-10 flex size-16 items-center justify-center rounded-full border-4 shadow-lg", eventInfo.color)}
-								>
-									<eventInfo.icon className="size-6 text-white" />
-								</div>
-
-								<div
-									className={cn("w-full flex-1 rounded-lg border bg-card p-6 shadow-sm transition-all duration-200 hover:shadow-md", {
-										isRecent: "ring-2 ring-primary/20",
-									})}
-								>
-									<div className="mb-3 flex items-start justify-between gap-4">
-										<div className="flex-1">
-											<h3 className="mb-2 font-semibold text-card-foreground md:text-xl">{title}</h3>
-											<div className="flex items-center gap-3 text-muted-foreground text-sm">
-												<span className="font-medium">{eventDate.format("DD [de] MMMM [de] YYYY")}</span>
-												<span className="text-xs">•</span>
-												<span>{eventDate.fromNow()}</span>
-												{isRecent && (
-													<>
-														<span className="text-xs">•</span>
-														<span className="font-medium text-primary">Recente</span>
-													</>
-												)}
-											</div>
-										</div>
-										<span className={cn("rounded-full px-3 py-1 font-medium text-xs", eventInfo.badgeColor)}>{eventInfo.label}</span>
-									</div>
-
-									<p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
-								</div>
+							<div key={event.id} className="relative flex items-center gap-6 max-lg:flex-col-reverse">
+								<EventIcon event={event} />
+								<EventCard event={event} />
 							</div>
 						);
 					})}

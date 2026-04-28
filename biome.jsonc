@@ -1,88 +1,114 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.4.12/schema.json",
 	"vcs": {
-		"enabled": false,
+		"enabled": true,
 		"clientKind": "git",
 		"useIgnoreFile": true
 	},
 	"files": {
-		"ignoreUnknown": false,
-		"includes": ["**", "!dist", "!node_modules", "!routeTree.gen.ts"],
-		"experimentalScannerIgnores": ["routeTree.gen.ts", "dist", "node_modules"]
+		"ignoreUnknown": true,
+		"includes": ["**", "!!**/dist", "!!**/nginx", "!!**/public", "!**/*.generated.ts", "!**/*.gen.ts"]
 	},
 	"formatter": {
 		"enabled": true,
+		"formatWithErrors": false,
+		"attributePosition": "auto",
 		"indentStyle": "tab",
+		"indentWidth": 2,
 		"lineWidth": 140,
-		"indentWidth": 2
+		"lineEnding": "lf",
+		"bracketSpacing": true,
+		"expand": "auto"
 	},
 	"linter": {
 		"enabled": true,
-		"domains": {
-			"react": "recommended",
-			"project": "recommended"
-		},
 		"rules": {
 			"recommended": true,
 			"correctness": {
-				"useExhaustiveDependencies": "error",
-				"noUnusedVariables": "error",
-				"noUndeclaredVariables": "error",
-				"noSetterReturn": "error",
-				"noConstantCondition": "error",
-				"noChildrenProp": "off",
-				"noNodejsModules": "off"
-			},
-			"a11y": {
-				"noAccessKey": "warn",
-				"noAutofocus": "warn",
-				"noDistractingElements": "warn",
-				"useAltText": "error",
-				"useHeadingContent": "error"
-			},
-			"performance": {
-				"noDelete": "error"
-			},
-			"security": {
-				"noDangerouslySetInnerHtml": "warn"
-			},
-			"suspicious": {
-				"noConsole": "warn"
-			},
-			"complexity": {
-				"useFlatMap": "error",
-				"noExtraBooleanCast": "warn"
+				"noUnusedImports": {
+					"level": "warn",
+					"fix": "safe"
+				},
+				"noUnresolvedImports": "off",
+				"useImportExtensions": "off",
+				"noChildrenProp": "off" // ? tanstackform use children prop for render props, but it is not a common pattern in react, so we can disable this rule
 			},
 			"style": {
-				"noUselessElse": "warn",
-				"useSelfClosingElements": "error",
-				"noParameterAssign": "error"
+				"useComponentExportOnlyModules": "off",
+				"useAtIndex": "on"
 			},
 			"nursery": {
 				"useSortedClasses": {
 					"level": "info",
 					"options": {
 						"attributes": ["classList"],
-						"functions": ["clsx", "cva", "tw", "tw.*"]
+						"functions": ["clsx", "cva", "tw", "tw.*", "cn"]
 					},
 					"fix": "safe"
 				}
+			},
+			"security": {
+				"noDangerouslySetInnerHtml": "error"
+			},
+			"complexity": {
+				"noExcessiveCognitiveComplexity": "on"
 			}
-		}
-	},
-	"javascript": {
-		"formatter": {
-			"quoteStyle": "double",
-			"jsxQuoteStyle": "double"
+		},
+		"domains": {
+			"react": "all",
+			"tailwind": "all",
+			"project": "all",
+			"test": "all"
 		}
 	},
 	"assist": {
 		"enabled": true,
 		"actions": {
 			"source": {
-				"organizeImports": "on",
-				"recommended": true
+				"organizeImports": "on"
 			}
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"enabled": true,
+			"jsxQuoteStyle": "double",
+			"quoteStyle": "double",
+			"quoteProperties": "asNeeded",
+			"trailingCommas": "all",
+			"semicolons": "always",
+			"arrowParentheses": "always",
+			"operatorLinebreak": "before"
+		}
+	},
+	"json": {
+		"parser": {
+			"allowTrailingCommas": true,
+			"allowComments": true
+		},
+		"formatter": {
+			"enabled": true,
+			"trailingCommas": "none"
+		},
+		"linter": {
+			"enabled": true
+		},
+		"assist": {
+			"enabled": true
+		}
+	},
+	"css": {
+		"parser": {
+			"tailwindDirectives": true
+		},
+		"formatter": {
+			"enabled": true
+		},
+		"linter": {
+			"enabled": true
+		},
+		"assist": {
+			"enabled": true
 		}
 	}
 }

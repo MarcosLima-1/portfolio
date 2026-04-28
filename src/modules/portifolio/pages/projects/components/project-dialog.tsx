@@ -1,11 +1,11 @@
-import { ChevronLeft, ChevronRight, ComputerIcon, ExternalLink, ExternalLinkIcon, GithubIcon, GlobeIcon, PhoneIcon } from "lucide-react";
+import { ChevronLeft, ChevronRight, ComputerIcon, ExternalLink, ExternalLinkIcon, GlobeIcon, PhoneIcon, WalletIcon } from "lucide-react";
 import { useState } from "react";
-import { Image } from "@/components/misc/Image";
+import { cn } from "tailwind-variants";
+import { Image } from "@/components/misc/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { DialogSimple } from "@/components/ui/dialog";
-import type { Plataform, Project } from "@/types/project";
-import { cn } from "@/utils/cn";
+import { Dialog } from "@/components/ui/dialog";
+import type { Plataform, Project } from "@/schemas/project";
 
 interface ProjectDialogProps {
 	project: Project;
@@ -25,7 +25,7 @@ export function ProjectDialog({ project }: ProjectDialogProps) {
 	const getLinkIcon = (type: string) => {
 		switch (type) {
 			case "github":
-				return <GithubIcon className="size-4" />;
+				return <WalletIcon className="size-4" />;
 			case "demo":
 				return <GlobeIcon className="size-4" />;
 			default:
@@ -46,14 +46,14 @@ export function ProjectDialog({ project }: ProjectDialogProps) {
 	const hasMoreThanOneImage = project.images.length > 1;
 
 	return (
-		<DialogSimple className="max-h-[90vh] max-w-6xl overflow-y-auto p-0">
-			<div className="flex max-lg:flex-col">
-				<div className="relative bg-muted/30 lg:col-span-2">
-					<div className="relative flex h-full min-h-[200px] items-center lg:min-h-[600px]">
+		<Dialog.Content className="h-[90vh] w-full p-0 sm:max-w-6xl">
+			<div className="flex overflow-hidden max-lg:flex-col">
+				<div className="relative w-full bg-muted/30 lg:col-span-2">
+					<div className="wf relative flex h-full min-h-50 items-center lg:min-h-150">
 						<Image
 							src={project.images[currentImageIndex] || "/placeholder.svg"}
 							alt={`${project.title} - Imagem ${currentImageIndex + 1}`}
-							className="size-full object-contain"
+							className="size-full object-contain max-sm:object-cover"
 							width={800}
 							height={600}
 						/>
@@ -62,14 +62,14 @@ export function ProjectDialog({ project }: ProjectDialogProps) {
 							<div className="absolute top-0 left-0 z-40 flex size-full items-center">
 								<button
 									type="button"
-									className="flex h-full flex-1 cursor-pointer items-center justify-start bg-gradient-to-r from-black/10 to-transparent"
+									className="flex h-full flex-1 cursor-pointer items-center justify-start bg-linear-to-r from-black/10 to-transparent"
 									onClick={prevImage}
 								>
 									<ChevronLeft className="size-8 text-white" />
 								</button>
 								<button
 									type="button"
-									className="flex h-full flex-1 cursor-pointer items-center justify-end bg-gradient-to-r from-transparent to-black/10"
+									className="flex h-full flex-1 cursor-pointer items-center justify-end bg-linear-to-r from-transparent to-black/10"
 									onClick={nextImage}
 								>
 									<ChevronRight className="size-8 text-white" />
@@ -87,7 +87,7 @@ export function ProjectDialog({ project }: ProjectDialogProps) {
 										type="button"
 										onClick={() => setCurrentImageIndex(index)}
 										className={cn(
-											"aspect-square size-16 flex-shrink-0 cursor-pointer overflow-hidden rounded-md border-2 transition-all",
+											"aspect-square size-16 shrink-0 cursor-pointer overflow-hidden rounded-md border-2 transition-all",
 											currentImageIndex === index ? "border-primary" : "border-transparent hover:border-muted-foreground/50",
 										)}
 									>
@@ -105,7 +105,7 @@ export function ProjectDialog({ project }: ProjectDialogProps) {
 					)}
 				</div>
 
-				<div className="space-y-8 p-8">
+				<div className="h-full max-w-sm space-y-8 overflow-y-auto p-8">
 					<div className="space-y-4">
 						<h1 className="font-bold text-3xl text-foreground leading-tight">{project.title}</h1>
 						<p className="text-base text-muted-foreground leading-relaxed">{project.description}</p>
@@ -152,21 +152,21 @@ export function ProjectDialog({ project }: ProjectDialogProps) {
 					{project.links.length > 0 && (
 						<div className="space-y-4">
 							<h3 className="font-semibold text-foreground text-sm uppercase tracking-wide">Links</h3>
-							<div className="space-y-2">
+							<div className="flex flex-col gap-2">
 								{project.links.map(({ href, name, type }) => (
-									<Button key={href} variant="outline" className="h-12 w-full justify-start gap-3 bg-transparent" asChild>
-										<a href={href} target="_blank" rel="noreferrer">
+									<a href={href} key={href} target="_blank" rel="noreferrer">
+										<Button variant="outline" className="h-12 w-full justify-start gap-3 bg-transparent">
 											{getLinkIcon(type)}
 											<span className="font-medium">{name}</span>
 											<ExternalLink className="ml-auto h-3 w-3 opacity-50" />
-										</a>
-									</Button>
+										</Button>
+									</a>
 								))}
 							</div>
 						</div>
 					)}
 				</div>
 			</div>
-		</DialogSimple>
+		</Dialog.Content>
 	);
 }

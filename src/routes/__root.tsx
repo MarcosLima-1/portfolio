@@ -1,50 +1,137 @@
-import type { QueryClient } from "@tanstack/react-query";
-import { createRootRouteWithContext, HeadContent, Outlet } from "@tanstack/react-router";
-import { Toaster } from "@/components/ui/sonner";
-import { checkEnv } from "@/lib/envs";
+/// <reference types="vite/client" />
 
-export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+import { TanStackDevtools } from "@tanstack/react-devtools";
+import { FormDevtoolsPanel } from "@tanstack/react-form-devtools";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
+import { createRootRouteWithContext, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
+import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import type { ReactNode } from "react";
+import { scan } from "react-scan";
+import { clientEnv } from "@/lib/env/client";
+import { queryClient } from "@/lib/tanstack-query/client";
+import { ToastProvider } from "@/modules/notification/components/toast-provider";
+import { ThemeProvider } from "@/modules/theme/context/theme-provider";
+import type { RouteContext } from "@/types/tanstack-router";
+import appCss from "../styles/global.css?url";
+
+export const Route = createRootRouteWithContext<RouteContext>()({
 	head: () => ({
 		meta: [
-			// ? Padrão (para o navegador)
-			{ title: "Markin | Desenvolvedor Full-stack & Web" },
+			{
+				charSet: "utf-8",
+			},
+			{
+				name: "viewport",
+				content: "width=device-width, initial-scale=1",
+			},
+			{ title: "Marcos | Engenheiro de Software & Frontend Developer" },
 			{
 				name: "description",
-				content: "Desenvolvedor de software focado em desenvolvimento web (React, APIs, DevOps). Conheça meu portfólio de projetos.",
-			},
-
-			// ? Open Graph (OG) - Para Facebook, LinkedIn, etc.
-			{ name: "og:title", content: "Markin | Portfólio de Desenvolvimento Web" },
-			{
-				name: "og:description",
 				content:
-					"Olá! Meu nome é Marcos, sou um desenvolvedor de software com foco em desenvolvimento web. Minhas habilidades se concentram no Front-end com React, Back-end (APIs robustas) e DevOps. Estou sempre em busca de novos desafios e feliz em contribuir com a sua equipe.",
+					"Portfólio profissional de Marcos, Engenheiro de Software especializado em React, TypeScript e infraestrutura DevOps. Confira meus projetos e experiências.",
 			},
-			{ name: "og:url", content: location.href },
-			{ name: "og:image", content: "/opengraph.png" },
-			{ name: "og:type", content: "website" },
-
-			// ? Twitter Cards - Para X (antigo Twitter)
-			{ name: "twitter:card", content: "summary_large_image" },
-			{ name: "twitter:title", content: "Markin | Portfólio de Desenvolvimento Web" },
+			{
+				name: "keywords",
+				content: "Engenharia de Software, Frontend Developer, React, TypeScript, DevOps, Portfolio, Desenvolvedor Web",
+			},
+			{
+				name: "author",
+				content: "Marcos",
+			},
+			{
+				property: "og:title",
+				content: "Marcos | Software Engineer Portfolio",
+			},
+			{
+				property: "og:description",
+				content:
+					"Desenvolvedor Frontend com experiência em React e gestão de infraestrutura. Veja como posso ajudar no seu próximo projeto.",
+			},
+			{
+				property: "og:type",
+				content: "website",
+			},
+			{
+				property: "og:image",
+				content: "/images/og.webp",
+			},
+			{
+				name: "twitter:card",
+				content: "summary_large_image",
+			},
+			{
+				name: "twitter:title",
+				content: "Marcos | Software Engineer Portfolio",
+			},
 			{
 				name: "twitter:description",
-				content:
-					"Desenvolvedor full-stack (React, APIs, DevOps) com foco em colaboração e trabalho em equipe. Conheça o portfólio do Marcos e seus projetos web.",
+				content: "Explore o portfólio de Marcos, focado em tecnologias modernas como React e ecossistema TanStack.",
 			},
-			{ name: "twitter:image", content: "/opengraph.png" },
+			{
+				name: "robots",
+				content: "index, follow",
+			},
+		],
+		links: [
+			{ rel: "stylesheet", href: appCss },
+			{ rel: "icon", href: "/images/icon.svg" },
 		],
 	}),
 	component: RootComponent,
 });
 
 function RootComponent() {
-	checkEnv();
+	scan({
+		enabled: true,
+	});
+
 	return (
-		<>
-			<HeadContent />
-			<Outlet />
-			<Toaster position="bottom-left" richColors duration={5000} />
-		</>
+		<RootDocument>
+			<QueryClientProvider client={queryClient}>
+				<ThemeProvider>
+					<ToastProvider>
+						<div className="w-full">
+							<main className="flex w-full flex-col items-center">
+								<Outlet />
+							</main>
+						</div>
+					</ToastProvider>
+				</ThemeProvider>
+
+				{clientEnv.VITE_DEV_MODE && (
+					<TanStackDevtools
+						plugins={[
+							{
+								name: "Tanstack Query",
+								render: <ReactQueryDevtoolsPanel />,
+							},
+							{
+								name: "Tanstack Router",
+								render: <TanStackRouterDevtoolsPanel />,
+							},
+							{
+								name: "TanStack Form",
+								render: <FormDevtoolsPanel />,
+							},
+						]}
+					/>
+				)}
+			</QueryClientProvider>
+		</RootDocument>
+	);
+}
+
+function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
+	return (
+		<html lang="pt">
+			<head>
+				<HeadContent />
+			</head>
+			<body>
+				{children}
+				<Scripts />
+			</body>
+		</html>
 	);
 }

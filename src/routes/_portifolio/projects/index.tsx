@@ -1,19 +1,29 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { DialogProvider, DialogTrigger } from "@/components/ui/dialog";
-import { TitlePage } from "@/modules/portifolio/components/title-page";
+import { Dialog } from "@/components/ui/dialog";
+import { Landing } from "@/components/ui/landing";
 import { ProjectCard } from "@/modules/portifolio/pages/projects/components/project-card";
 import { ProjectDialog } from "@/modules/portifolio/pages/projects/components/project-dialog";
 import { projects } from "@/modules/portifolio/pages/projects/constants/projects";
-import { type ProjectCategory, projectCategories, projectCategoriesInfo } from "@/types/project";
+import { type ProjectCategory, projectCategories, projectCategoriesInfo } from "@/schemas/project";
 
 export const Route = createFileRoute("/_portifolio/projects/")({
 	component: RouteComponent,
 	head: () => ({
 		meta: [
+			{ title: "Marcos | Projetos" },
 			{
-				title: "Projetos - Markin | Desenvolvedor Full-stack & Web",
+				name: "description",
+				content: "Explore meus projetos de desenvolvimento de software. Veja os detalhes, tecnologias usadas e resultados alcançados.",
+			},
+			{
+				property: "og:title",
+				content: "Marcos | Projetos",
+			},
+			{
+				property: "og:description",
+				content: "Explore meus projetos de desenvolvimento de software. Veja os detalhes, tecnologias usadas e resultados alcançados.",
 			},
 		],
 	}),
@@ -24,15 +34,17 @@ function RouteComponent() {
 	const filteredProjects = currentProject === "all" ? projects : projects.filter((project) => project.categories.includes(currentProject));
 
 	return (
-		<div className="h-full space-y-16">
-			<TitlePage title="Projetos" />
+		<Landing.Page className="h-full space-y-16">
+			<Landing.Title showDecoration size="lg">
+				Projetos
+			</Landing.Title>
 			<div className="space-y-6">
 				<div className="flex w-fit max-w-full gap-2 overflow-x-auto rounded-md border p-2">
 					{projectCategories.options.map((categories) => {
 						const displayName = projectCategoriesInfo[categories].displayName;
 						const isActive = currentProject === categories;
 						return (
-							<Button onClick={() => setCurrentProject(categories)} key={categories} variant={isActive ? "default" : "ghost"}>
+							<Button onClick={() => setCurrentProject(categories)} key={categories} hideShadow variant={isActive ? "primary" : "ghost"}>
 								{displayName}
 							</Button>
 						);
@@ -42,16 +54,16 @@ function RouteComponent() {
 				<div className="grid gap-8 max-md:place-content-center md:grid-cols-2 lg:flex lg:flex-wrap">
 					{filteredProjects.map((project) => {
 						return (
-							<DialogProvider key={project.id}>
-								<DialogTrigger className="text-left">
+							<Dialog.Root key={project.id}>
+								<Dialog.Trigger className="text-left">
 									<ProjectCard project={project} />
-								</DialogTrigger>
+								</Dialog.Trigger>
 								<ProjectDialog project={project} />
-							</DialogProvider>
+							</Dialog.Root>
 						);
 					})}
 				</div>
 			</div>
-		</div>
+		</Landing.Page>
 	);
 }

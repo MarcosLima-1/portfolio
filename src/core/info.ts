@@ -1,6 +1,15 @@
 export const info = {
-	name: "Marcos Lima",
-	age: "2005-03-01T16:44:34+00:00",
-	mail: "markin-work@protonmail.com",
-	phone: "87999631718",
+	name: "Marcos",
+	alsoKnownAs: ["Markin"],
+	fullName: "Marcos Lima Barbosa",
+	role: "Engenheiro de Software",
+	email: "markin-work@protonmail.com",
+	location: "Pernambuco - Brasil",
+	socialMedias: {
+		github: "https://github.com/MarcosLima-1",
+		linkedin: "https://www.linkedin.com/in/marcos-lima-56072734b",
+		whatsApp: "https://wa.me/5587999631718",
+	},
+	phone: "87 999631718",
+	birthDate: "2005-03-01",
 };

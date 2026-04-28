@@ -7,22 +7,42 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+
+# artifacts
 node_modules
-dist
-dist-ssr
+build/*
+.tanstack
+.unlighthouse
+*.generated.*
+result.txt
+
+# local files
+docker-compose.override.yml
 *.local
 
-# Editor directories and files
+# IDE files
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
+
+.zed/*
+!.zed/settings.json
+
 .idea
+
+.env
+
+# others
+
 .DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-/src/public-paths.d.ts
-bundle-analysis.html
-/.tanstack
+
+# Sentry Config File
+.env.sentry-build-plugin
+
+*storybook.log
+storybook-static

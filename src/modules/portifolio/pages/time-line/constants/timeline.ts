@@ -1,19 +1,19 @@
-import type { TimelineEvent } from "@/types/timeline-event";
+import { dayjs } from "@/lib/dayjs";
+import type { TimelineEvent } from "@/modules/portifolio/pages/time-line/types/timeline-event";
 
 export const timelineEvents: TimelineEvent[] = [
 	{
 		id: "1",
 		title: "Medalha de Bronze - OBMEP",
 		description: "Conquista de medalha de bronze na Olimpíada Brasileira de Matemática das Escolas Públicas.",
-		date: "2017-08-01",
+		date: "2019-08-01",
 		type: "achievement",
 	},
 	{
 		id: "2",
 		title: "Início da Graduação em Engenharia de Software",
-		description:
-			"Início do curso de Engenharia de Software na Cruzeiro do Sul. Atualmente no 6º semestre, com previsão de conclusão em 2027.",
-		date: "2023-02-17",
+		description: "Início do curso de Engenharia de Software em...",
+		date: "2023-02-15",
 		type: "education",
 	},
 	{
@@ -34,7 +34,9 @@ export const timelineEvents: TimelineEvent[] = [
 		id: "5",
 		title: "Lançamento da Versão Web do ComedyHub",
 		description: "Lançamento da plataforma web, permitindo que os usuários acessem, postem e interajam com memes através do navegador.",
-		date: "2025-03-1",
+		date: "2025-06-15",
 		type: "workExperience",
 	},
 ];
+
+export const sortedEventsByDate = timelineEvents.sort((a, b) => dayjs(b.date).valueOf() - dayjs(a.date).valueOf());

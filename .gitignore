@@ -30,6 +30,8 @@ docker-compose.override.yml
 
 .idea
 
+.env
+
 # others
 
 .DS_Store

@@ -65,6 +65,7 @@
     "@storybook/addon-onboarding": "^10.3.5",
     "@storybook/addon-themes": "^10.3.5",
     "@storybook/addon-vitest": "^10.3.5",
+    "@storybook/react-vite": "^10.3.5",
     "@tanstack/router-cli": "^1.166.36",
     "@types/node": "^22.19.17",
     "@types/react": "^19.2.14",

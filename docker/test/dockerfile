@@ -17,4 +17,4 @@ COPY . .
 
 FROM build AS runner
 WORKDIR /app
-ENTRYPOINT ["bun", "run", "test:ci"]
+ENTRYPOINT ["bun", "run", "test:integration"]

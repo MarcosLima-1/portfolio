@@ -7,7 +7,6 @@ export const clientEnvSchema = z.object({
 		.string()
 		.transform((val) => val === "true")
 		.default(false),
-	VITE_API_URL: z.url(),
 	VITE_WEB_VERSION: z.string().min(5),
 
 	// ? Sentry envs para relatórios de erros
@@ -15,8 +14,6 @@ export const clientEnvSchema = z.object({
 	VITE_SENTRY_URL: z.url(),
 	VITE_SENTRY_ORG: z.string(),
 	VITE_SENTRY_PROJECT: z.string(),
-	VITE_SENTRY_AUTH_TOKEN: z.string(),
 });
 
-// Validate client environment
 export const clientEnv = clientEnvSchema.parse(import.meta.env);

@@ -18,6 +18,7 @@ RUN bun run build --mode $VITE_BUILD_MODE
 FROM base AS production
 WORKDIR /app
 COPY --from=build /build/build/frontend /app
+COPY --from=build /build/.env /app
 
 ENV PORT=5173
 EXPOSE 5173

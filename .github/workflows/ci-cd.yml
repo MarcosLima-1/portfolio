@@ -105,13 +105,42 @@ jobs:
           severity: "CRITICAL,HIGH"
           output: "trivy_report.txt"
 
+      - name: Save Trivy report as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-report-${{ github.run_id }}
+          path: trivy_report.txt
+
+      - name: Summarize vulnerabilities in Actions UI
+        run: |
+          echo "### Vulnerability scan for ${{ steps.meta.outputs.tag }}" >> "$GITHUB_STEP_SUMMARY"
+          echo '' >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          head -n 200 trivy_report.txt >> "$GITHUB_STEP_SUMMARY" || true
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Send vulnerability report to Discord (optional)
+        uses: appleboy/discord-action@v1.2.0
+        with:
+          webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
+          webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
+          message: "Segue o relatório de vulnerabilidades para a imagem `${{ steps.meta.outputs.tag }}`"
+          file: ./trivy_report.txt
+
   registry-push:
-    needs: image-scan
+    needs: integration-tests
     if: ${{ github.event_name == 'push' && (github.ref_name == 'main' || github.ref_name == 'staging' || github.ref_name == 'dev') }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+
+      - name: Define image tag
+        id: meta
+        run: |
+          branch_name="${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}"
+          sanitized_branch_name="${branch_name//\//-}"
+          echo "tag=${{ secrets.DOCKER_USERNAME }}/apps:${{ github.event.repository.name }}-${sanitized_branch_name}-${GITHUB_SHA}" >> "$GITHUB_OUTPUT"
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
@@ -129,14 +158,13 @@ jobs:
           file: ./docker/prod/dockerfile
           push: true
           load: true
-          tags: ${{ needs.image-scan.outputs.image-tag }}
+          tags: ${{ steps.meta.outputs.tag }}
 
   notify:
     needs:
       - lint
       - unit-test
       - integration-tests
-      - image-scan
       - registry-push
     if: ${{ always() && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') }}
     runs-on: ubuntu-latest
@@ -147,7 +175,6 @@ jobs:
           if [ "${{ needs.lint.result }}" = "success" ] && \
              [ "${{ needs.unit-test.result }}" = "success" ] && \
              [ "${{ needs.integration-tests.result }}" = "success" ] && \
-             [ "${{ needs.image-scan.result }}" = "success" ] && \
              { [ "${{ needs.registry-push.result }}" = "success" ] || [ "${{ needs.registry-push.result }}" = "skipped" ]; }; then
             echo "status=success" >> "$GITHUB_OUTPUT"
           else

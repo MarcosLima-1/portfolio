@@ -1,14 +1,8 @@
 /// <reference types="vite/client" />
 
-import { TanStackDevtools } from "@tanstack/react-devtools";
-import { FormDevtoolsPanel } from "@tanstack/react-form-devtools";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
 import { createRootRouteWithContext, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
-import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import type { ReactNode } from "react";
-import { scan } from "react-scan";
-import { clientEnv } from "@/lib/env/client";
 import { queryClient } from "@/lib/tanstack-query/client";
 import { ToastProvider } from "@/modules/notification/components/toast-provider";
 import { ThemeProvider } from "@/modules/theme/context/theme-provider";
@@ -82,10 +76,6 @@ export const Route = createRootRouteWithContext<RouteContext>()({
 });
 
 function RootComponent() {
-	scan({
-		enabled: true,
-	});
-
 	return (
 		<RootDocument>
 			<QueryClientProvider client={queryClient}>
@@ -98,25 +88,6 @@ function RootComponent() {
 						</div>
 					</ToastProvider>
 				</ThemeProvider>
-
-				{clientEnv.VITE_DEV_MODE && (
-					<TanStackDevtools
-						plugins={[
-							{
-								name: "Tanstack Query",
-								render: <ReactQueryDevtoolsPanel />,
-							},
-							{
-								name: "Tanstack Router",
-								render: <TanStackRouterDevtoolsPanel />,
-							},
-							{
-								name: "TanStack Form",
-								render: <FormDevtoolsPanel />,
-							},
-						]}
-					/>
-				)}
 			</QueryClientProvider>
 		</RootDocument>
 	);

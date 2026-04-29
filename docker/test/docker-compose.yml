@@ -5,6 +5,8 @@ include:
 
 services:
   app:
+    env_file:
+      - ../../env.example
     extends:
       file: "../prod/docker-compose.yml"
       service: app

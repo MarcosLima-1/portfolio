@@ -105,14 +105,6 @@ jobs:
           severity: "CRITICAL,HIGH"
           output: "trivy_report.txt"
 
-      - name: Send vulnerability report to Discord
-        uses: appleboy/discord-action@v1.2.0
-        with:
-          webhook_id: ${{ secrets.DISCORD_VULNERABILITY_WEBHOOK_ID }}
-          webhook_token: ${{ secrets.DISCORD_VULNERABILITY_WEBHOOK_TOKEN }}
-          message: "Segue o relatório de vulnerabilidades para a imagem `${{ steps.meta.outputs.tag }}`"
-          file: ./trivy_report.txt
-
   registry-push:
     needs: image-scan
     if: ${{ github.event_name == 'push' && (github.ref_name == 'main' || github.ref_name == 'staging' || github.ref_name == 'dev') }}

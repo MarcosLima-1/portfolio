@@ -85,7 +85,6 @@ export const Icon: Story = {
 	render: (args) => (
 		<Button {...args}>
 			<TrashIcon />
-			<span className="sr-only">Apagar</span>
 		</Button>
 	),
 };

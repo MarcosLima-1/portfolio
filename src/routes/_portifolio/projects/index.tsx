@@ -51,7 +51,7 @@ function RouteComponent() {
 					})}
 				</div>
 
-				<div className="grid gap-8 max-md:place-content-center md:grid-cols-2 lg:flex lg:flex-wrap">
+				<div className="grid grid-cols-[repeat(auto-fit,350px)] gap-8 overflow-hidden">
 					{filteredProjects.map((project) => {
 						return (
 							<Dialog.Root key={project.id}>

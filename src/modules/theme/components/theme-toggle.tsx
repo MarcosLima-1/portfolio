@@ -14,7 +14,7 @@ export function ThemeToggle() {
 	}
 
 	return (
-		<Button variant="outline" size="icon" onClick={toggleTheme}>
+		<Button aria-label="Theme Button" hideShadow variant="outline" size="icon" onClick={toggleTheme}>
 			{currentTheme === "dark" ? <MoonIcon /> : <SunIcon />}
 		</Button>
 	);

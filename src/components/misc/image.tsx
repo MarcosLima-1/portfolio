@@ -62,7 +62,6 @@ export function Image({ alt, height, className, priority = false, src, width, ..
 			alt={alt}
 			width={width}
 			height={height}
-			draggable={false}
 			className={cn("transition-all duration-500 ease-out", className)}
 			loading={priority ? "eager" : "lazy"}
 			fetchPriority={priority ? "high" : "low"}

@@ -15,7 +15,7 @@ export function Header({ className }: HeaderProps) {
 				{headerLinks.map(({ href, label, icon: Icon }) => {
 					return (
 						<Link key={label} className="max-lg:w-full [&.active]:text-primary" to={href}>
-							<Button className="gap-2" variant="ghost">
+							<Button aria-label={label} className="gap-2" variant="ghost">
 								<Icon />
 								<span className="max-lg:hidden">{label}</span>
 							</Button>

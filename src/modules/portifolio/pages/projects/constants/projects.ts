@@ -19,12 +19,12 @@ export const projects: Project[] = [
 	},
 	{
 		id: "2",
-		title: "mimaeu",
+		title: "Mimaeu",
 		description:
 			"Site para compartilhamento de presentes, onde os usuarios podem criar listas de presentes para eventos como aniversários, casamentos, etc.",
 		techs: ["n8n", "Elysia", "Postgres", "TypeScript", "TanStack Libs"],
 		platforms: ["web"],
-		images: ["/projects/mimaeu.png", "/projects/mimaeu1.png"],
+		images: ["/projects/mimaeu.webp", "/projects/mimaeu2.webp"],
 		links: [
 			{
 				name: "Mimaeu",
@@ -40,7 +40,7 @@ export const projects: Project[] = [
 		description: "Portfólio pessoal e painel de administração para gerenciar e exibir meus projetos dinamicamente.",
 		techs: ["Elysia", "TypeScript", "Postgres", "Docker"],
 		platforms: ["web"],
-		images: ["/projects/portfolio.png"],
+		images: ["/projects/portfolio.webp"],
 		links: [
 			{
 				name: "Site",

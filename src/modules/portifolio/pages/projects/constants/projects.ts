@@ -40,7 +40,7 @@ export const projects: Project[] = [
 		description: "Portfólio pessoal e painel de administração para gerenciar e exibir meus projetos dinamicamente.",
 		techs: ["Elysia", "TypeScript", "Postgres", "Docker"],
 		platforms: ["web"],
-		images: ["/projects/portfolio.webp"],
+		images: ["/projects/portfolio.webp", "/projects/portfolio1.webp", "/projects/portfolio2.webp", "/projects/portfolio3.webp"],
 		links: [
 			{
 				name: "Site",
